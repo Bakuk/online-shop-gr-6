@@ -1,0 +1,75 @@
+
+<form class="form" action="/registrate" method="post">
+
+    <?php if (isset($errors['name'])): ?>
+        <label><?php echo $errors['name']; ?></label>
+    <?php endif; ?>
+    <input class="input" name="name" type="text" placeholder="Ваше имя">
+
+
+    <?php if (isset($errors['phone'])): ?>
+        <label><?php echo $errors['phone']; ?></label>
+    <?php endif; ?>
+    <input class="input" name="phone" type="tel" placeholder="Ваш телефон">
+
+
+    <?php if (isset($errors['psw'])): ?>
+        <label><?php echo $errors['psw']; ?></label>
+    <?php endif; ?>
+    <input class="input" name="psw" type="password" placeholder="Пароль">
+
+
+    <button class="btn" type="submit">Регистрация</button>
+</form>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        color: #000;
+        background-color: #f8f8f8;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    .form {
+        max-width: 320px;
+        padding: 15px;
+        margin: 20px auto;
+        background-color: #fff;
+    }
+
+    .input {
+        display: block;
+        width: 100%;
+        padding: 8px 10px;
+        margin-bottom: 10px;
+
+        border: 1px solid #ccc;
+
+        font-family: inherit;
+        font-size: 16px;
+    }
+
+    .btn {
+        display: block;
+        width: 100%;
+        padding: 8px 10px;
+
+        border: 0;
+        background-color: #1cbc11;
+        cursor: pointer;
+
+        font-family: inherit;
+        font-size: 16px;
+        color: #fff;
+    }
+
+    .btn:hover {
+        background-color: #14a20a;
+    }
+</style>
+
+

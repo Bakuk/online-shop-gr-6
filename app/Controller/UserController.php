@@ -1,0 +1,117 @@
+<?php
+
+
+require_once './../Model/User.php';
+class UserController
+{
+    private User $user;
+
+    public function __construct()
+    {
+        $this->user = new User();
+    }
+
+    public function getRegistrate()
+    {
+        require_once './../View/get_registrate.phtml';
+    }
+
+    public function get_login()
+    {
+        require_once './../View/get_login.html';
+    }
+
+    public function postRegistrate()
+    {
+        $errors = [];
+
+        $errors = $this->validate($_POST);
+
+        if (empty($errors)) {
+            $name = $_POST['name'];
+            $phone = $_POST['phone'];
+            $psw = $_POST['psw'];
+
+
+            $this->user->create($name, $phone, $psw);
+
+            header('location: /login');
+
+        } else {
+            print_r($errors);
+            echo "Данные не добавлены";
+        }
+
+        require_once './../View/get_registrate.phtml';
+    }
+
+    public function post_login()
+    {
+        $name = $_POST['name'];
+        $psw = $_POST['psw'];
+
+        try {
+
+
+            $data = $this->user->search($name, $psw);
+
+            if (count($data) > 0){
+                session_start();
+                $_SESSION['id'] = $data['id'];
+                $_SESSION['name'] = $data['name'];
+                header('location: /catalog');
+
+            } else {
+                echo "Неверный password или name";
+            }
+
+        }
+        catch (PDOException $e) {
+            echo "Database error: " . $e->getMessage();
+        }
+
+    }
+    private function validate(array $data): array
+    {
+        $error = [];
+
+        if (isset($data['name'])) {
+            $name = $data['name'];
+            if (empty($name)) {
+                $error['name'] = 'Имя должно быть заполнено';
+            } elseif (strlen($name) < 2) {
+                $error['name'] = 'Имя должно быть 2 символов';
+            }
+
+        } else {
+            $error['name'] = 'Поле name не указано';
+        }
+
+        if (isset($data['phone'])) {
+            $phone = $data['phone'];
+            if (empty($phone)) {
+                $error['phone'] = 'телефон должно быть заполнено';
+            } elseif (strlen($phone) < 2) {
+                $error['phone'] = 'Введите телефон правильно';
+            }
+        } else {
+            $error['phone'] = 'Поле телефон не указано';
+        }
+
+        if (isset($data['psw'])) {
+            $psw = $data['psw'];
+            if (empty($psw)) {
+                $error['psw'] = 'Password должно быть заполнено';
+            } elseif (strlen($psw) < 2) {
+                $error['psw'] = 'Введите password правильно';
+            }
+
+        } else {
+            $error['psw'] = 'Поле password не указано';
+        }
+
+        return $error;
+    }
+
+
+}
