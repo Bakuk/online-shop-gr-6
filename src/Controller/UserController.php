@@ -1,28 +1,24 @@
 <?php
 
+namespace Controller;
+use Model\User;
 
-require_once './../Model/User.php';
-class UserController
-{
-    private User $user;
+class UserController {
+    //private User $user;
 
-    public function __construct()
-    {
+    /*public function __construct() {
         $this->user = new User();
-    }
+    }*/
 
-    public function getRegistrate()
-    {
+    public function getRegistrate() {
         require_once './../View/get_registrate.phtml';
     }
 
-    public function get_login()
-    {
+    public function get_login() {
         require_once './../View/get_login.html';
     }
 
-    public function postRegistrate()
-    {
+    public function postRegistrate() {
         $errors = [];
 
         $errors = $this->validate($_POST);
@@ -45,20 +41,19 @@ class UserController
         require_once './../View/get_registrate.phtml';
     }
 
-    public function post_login()
-    {
+    public function post_login() {
         $name = $_POST['name'];
         $psw = $_POST['psw'];
 
         try {
 
 
-            $data = $this->user->search($name, $psw);
+            $obj = User::search($name, $psw);
 
-            if (count($data) > 0){
+            if (!empty($obj)){
                 session_start();
-                $_SESSION['id'] = $data['id'];
-                $_SESSION['name'] = $data['name'];
+                $_SESSION['id'] = $obj->getId();
+                $_SESSION['name'] = $obj->getName();
                 header('location: /catalog');
 
             } else {
@@ -71,8 +66,7 @@ class UserController
         }
 
     }
-    private function validate(array $data): array
-    {
+    private function validate(array $data): array {
         $error = [];
 
         if (isset($data['name'])) {
@@ -112,6 +106,4 @@ class UserController
 
         return $error;
     }
-
-
 }

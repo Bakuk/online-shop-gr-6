@@ -1,24 +1,34 @@
 <section class="catalog">
     <div class="container">
-        <?php echo "Корзина пользователя " .$_SESSION['name'] ?>
+        <?php echo "Добро пожаловать " .$_SESSION['name'] ?>
+
+
+        <br>
+        <a href="cart"><span class="btn btn-2"><?php echo $count['sum'] ?></span><input class="btn btn-2 btn-sep icon-cart" type="submit" value="Корзина"> </a>
+
+
         <div class="catalog__flex">
             <div class="catalog__row">
                 <?php foreach($products as $product):?>
 
-                    <div class="catalog__col">
-                        <div class="catalog__card card">
-                            <div class="card__image"><img src="<?php echo $product['pictures']?>" alt=""/></div>
-                            <div class="card__body">
-                                <div class="card__title"><?php echo $product['title']?></div>
-                                <div class="card__text"><?php echo $product['descr']?></div>
-                                <div class="card__text"><?php echo $product['quantity']?></div>
-                                <div class="card__bottom">
-                                    <div class="card__cost">$<?php echo $product['price']?></div>
+                        <form class="catalog__col" action='' method="post">
+                            <div class="catalog__card card">
+                                <div class="card__image"><img src="<?php echo $product->getPictures()?>" alt=""/></div>
+                                <div class="card__body">
+                                    <div class="card__title"><?php echo $product->getTitle()?></div>
+                                    <div class="card__text"><?php echo $product->getDesr()?></div>
+                                    <div class="card__bottom">
+                                        <div class="card__cost">$<?php echo $product->getPrice()?></div>
+
+                                        <input name = "product-id" id = 'product-id' value="<?php echo $product->getId()?>" type="hidden">
+                                        <!--<input class="card__button button" type="submit" value="add">-->
+                                        <input type="submit" name="plus" value="+">
+                                        <input type="submit" name="minus" value="-">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                    </div>
+                        </form>
                     </form>
                 <?php endforeach; ?>
             </div>

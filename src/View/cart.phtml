@@ -1,32 +1,24 @@
 <section class="catalog">
     <div class="container">
-        <?php echo "Добро пожаловать " .$_SESSION['name'] ?>
-
-
-        <br>
-        <a href="cart"><span class="btn btn-2"><?php echo $count['sum'] ?></span><input class="btn btn-2 btn-sep icon-cart" type="submit" value="Корзина"> </a>
-
-
+            <?php echo "Корзина пользователя " .$_SESSION['name'] ?>
         <div class="catalog__flex">
             <div class="catalog__row">
                 <?php foreach($products as $product):?>
 
-                        <form class="catalog__col" action='add-product' method="post">
-                            <div class="catalog__card card">
-                                <div class="card__image"><img src="<?php echo $product['pictures']?>" alt=""/></div>
-                                <div class="card__body">
-                                    <div class="card__title"><?php echo $product['title']?></div>
-                                    <div class="card__text"><?php echo $product['descr']?></div>
-                                    <div class="card__bottom">
-                                        <div class="card__cost">$<?php echo $product['price']?></div>
-                                        <input name = "quantity" id = 'quantity' placeholder="quantity" value="1">
-                                        <input name = "product-id" id = 'product-id' value="<?php echo $product['id']?>" type="hidden">
-                                        <input class="card__button button" type="submit" value="add">
-                                    </div>
+                    <div class="catalog__col">
+                        <div class="catalog__card card">
+                            <div class="card__image"><img src="<?php echo $product->getPictures()?>" alt=""/></div>
+                            <div class="card__body">
+                                <div class="card__title"><?php echo $product->getTitle()?></div>
+                                <div class="card__text"><?php echo $product->getDesr()?></div>
+                                <div class="card__text">Quantity: <?php echo $product->getQuantity()?></div>
+                                <div class="card__bottom">
+                                    <div class="card__cost">$<?php echo $product->getPrice()?></div>
                                 </div>
                             </div>
+                        </div>
 
-                        </form>
+                    </div>
                     </form>
                 <?php endforeach; ?>
             </div>
