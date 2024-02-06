@@ -2,8 +2,8 @@
 
 namespace Model;
 
-
-class User extends Model {
+class User extends Model
+{
     private int $id;
     private string $name;
     private string $phone;
@@ -17,16 +17,15 @@ class User extends Model {
         $this->psw = $psw;
     }
 
-    public static function search(string $name, string $psw):User {
-
+    public static function search(string $name, string $psw):User
+    {
         $stmt = self::getPDO()->prepare('SELECT * FROM users WHERE name = :name and psw = :psw');
 
         $stmt->execute(['name' => $name, 'psw' => $psw]);
         $data = $stmt->fetch();
-
         return new User($data['id'], $data['name'], $data['phone'], $data['psw']);
-
     }
+
     public function create(string $name, string $phone, string $psw) {
 
         $stmt = self::getPDO()->prepare('INSERT INTO users (name, phone, psw) values (:name, :phone, :psw)'); //защита от некоректных данных

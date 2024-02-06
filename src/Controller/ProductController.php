@@ -5,44 +5,82 @@ namespace Controller;
 use Model\Product;
 use Model\UserProduct;
 
-class ProductController {
-   // private UserProduct $userProduct;
-
-   /* public function __construct() {
-        $this->userProduct = new UserProduct();
-
-    }*/
-
-    public function getCatalog() {
+class ProductController
+{
+    public function getCatalog()
+    {
         session_start();
 
-        if (isset($_SESSION['id'])) {
+        if (isset($_SESSION['id']))
+        {
 
             $userId = $_SESSION['id'];
             $products = Product::getAll();
             $count = UserProduct::count($userId);
             require_once './../View/catalog.phtml';
 
-        } else {
+        } else
+        {
+            header('location: /registrate');
+        }
+    }
+    public function plusProduct()
+    {
+        session_start();
+        if (isset($_SESSION['id']))
+        {
+            $userId = $_SESSION['id'];
+            $productId = (int)$_REQUEST['product-id'];
+            $quantity = 1;
+
+            if (isset($_POST['plus']))
+            {
+                $data = UserProduct::getFilterUserProduct($userId, $productId);
+
+                if(!empty($data))
+                {
+                    UserProduct::updateQuantityAdd($productId, $userId);
+                    header('location: /catalog' );
+                } else
+                {
+                    UserProduct::create($userId, $productId, $quantity);
+                    header('location: /catalog' );
+                }
+
+                header('location: /catalog' );
+            } else
+            {
+                echo 'Error';
+            }
+        } else
+        {
             header('location: /registrate');
         }
     }
 
-   /* public function plusProduct() {
+   public function minusProduct()
+   {
         session_start();
-        if (isset($_SESSION['id'])) {
-
+        if (isset($_SESSION['id']))
+        {
             $userId = $_SESSION['id'];
             $productId = (int)$_REQUEST['product-id'];
 
-            if (isset($_POST['plus'])){
-
-                header('location: /catalog' );
+            if (isset($_POST['minus']))
+            {
+                echo "Работает";
+                //header('location: /catalog' );
             }
         }
-    }*/
+        else
+        {
+            echo "Не существует такого пользователя";
+        }
+    }
 
-    public function addProduct() {
+
+/*
+   public function addProduct() {
         session_start();
 
         if (isset($_SESSION['id'])){
@@ -56,7 +94,7 @@ class ProductController {
                 if (isset($_POST['plus'])){
 
                     echo "Plus";
-                    /*$data = UserProduct::getFilterUserProduct($productId, $userId);
+                    $data = UserProduct::getFilterUserProduct($productId, $userId);
                     if(!empty($data)){
                         UserProduct::updateQuantityAdd($productId, $userId);
                         header('location: /catalog' );
@@ -65,11 +103,10 @@ class ProductController {
                         $this->userProduct->create($userId, $productId, $quantity);
                         header('location: /catalog' );
 
-                    }*/
+                    }
                 }
 
                 if (isset($_POST['minus'])){
-/*
                     $data1 = UserProduct::getFilterUserProduct($productId, $userId);
                     if(!empty($data1)){
                         UserProduct::updateQuantityMinus($productId, $userId);
@@ -79,7 +116,7 @@ class ProductController {
                         $this->userProduct->create($userId, $productId, $quantity);
                         header('location: /catalog' );
 
-                    }*/
+                    }
 
                 }
 
@@ -88,7 +125,7 @@ class ProductController {
             }
         }
     }
-
+*/
     public function getCart() {
         session_start();
         if (isset($_SESSION['id'])) {

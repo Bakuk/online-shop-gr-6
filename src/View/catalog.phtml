@@ -11,7 +11,7 @@
             <div class="catalog__row">
                 <?php foreach($products as $product):?>
 
-                        <form class="catalog__col" action='' method="post">
+                        <div class="catalog__col">
                             <div class="catalog__card card">
                                 <div class="card__image"><img src="<?php echo $product->getPictures()?>" alt=""/></div>
                                 <div class="card__body">
@@ -20,16 +20,20 @@
                                     <div class="card__bottom">
                                         <div class="card__cost">$<?php echo $product->getPrice()?></div>
 
-                                        <input name = "product-id" id = 'product-id' value="<?php echo $product->getId()?>" type="hidden">
-                                        <!--<input class="card__button button" type="submit" value="add">-->
-                                        <input type="submit" name="plus" value="+">
-                                        <input type="submit" name="minus" value="-">
+                                        <form action = "/plusProduct" method="post">
+                                            <input name = "product-id" id = 'product-id' value="<?php echo $product->getId()?>" type="hidden">
+                                            <input class = "btn btn-2" type="submit" name="plus" value="+">
+                                        </form>
+
+                                        <form action="/minusProduct" method="post">
+                                            <input name = "product-id" id = 'product-id' value="<?php echo $product->getId()?>" type="hidden">
+                                            <input class = "btn btn-2" type="submit" name="minus" value="-">
+                                        </form>
+
                                     </div>
                                 </div>
                             </div>
-
-                        </form>
-                    </form>
+                        </div>
                 <?php endforeach; ?>
             </div>
         </div>

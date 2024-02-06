@@ -74,6 +74,7 @@ class App {
         $requestUri = $_SERVER['REQUEST_URI'];
         $requestMethod = $_SERVER['REQUEST_METHOD'];
 
+
         if ($this->routes[$requestUri]){
             if ($this->routes[$requestUri][$requestMethod]){
 
@@ -82,5 +83,6 @@ class App {
                 $obj->$method();
             }
         }
+
     }
 }

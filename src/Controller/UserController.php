@@ -3,27 +3,26 @@
 namespace Controller;
 use Model\User;
 
-class UserController {
-    //private User $user;
-
-    /*public function __construct() {
-        $this->user = new User();
-    }*/
-
-    public function getRegistrate() {
+class UserController
+{
+    public function getRegistrate()
+    {
         require_once './../View/get_registrate.phtml';
     }
 
-    public function get_login() {
+    public function get_login()
+    {
         require_once './../View/get_login.html';
     }
 
-    public function postRegistrate() {
+    public function postRegistrate()
+    {
         $errors = [];
 
         $errors = $this->validate($_POST);
 
-        if (empty($errors)) {
+        if (empty($errors))
+        {
             $name = $_POST['name'];
             $phone = $_POST['phone'];
             $psw = $_POST['psw'];
@@ -33,7 +32,9 @@ class UserController {
 
             header('location: /login');
 
-        } else {
+        }
+        else
+        {
             print_r($errors);
             echo "Данные не добавлены";
         }
@@ -41,7 +42,8 @@ class UserController {
         require_once './../View/get_registrate.phtml';
     }
 
-    public function post_login() {
+    public function post_login()
+    {
         $name = $_POST['name'];
         $psw = $_POST['psw'];
 
@@ -50,57 +52,79 @@ class UserController {
 
             $obj = User::search($name, $psw);
 
-            if (!empty($obj)){
+            if (!empty($obj))
+            {
                 session_start();
                 $_SESSION['id'] = $obj->getId();
                 $_SESSION['name'] = $obj->getName();
                 header('location: /catalog');
 
-            } else {
+            }
+            else
+            {
                 echo "Неверный password или name";
             }
 
         }
-        catch (PDOException $e) {
+        catch (PDOException $e)
+        {
             echo "Database error: " . $e->getMessage();
         }
 
     }
-    private function validate(array $data): array {
+    private function validate(array $data): array
+    {
         $error = [];
 
-        if (isset($data['name'])) {
+        if (isset($data['name']))
+        {
             $name = $data['name'];
-            if (empty($name)) {
+            if (empty($name))
+            {
                 $error['name'] = 'Имя должно быть заполнено';
-            } elseif (strlen($name) < 2) {
+            }
+            elseif (strlen($name) < 2)
+            {
                 $error['name'] = 'Имя должно быть 2 символов';
             }
 
-        } else {
+        }
+        else
+        {
             $error['name'] = 'Поле name не указано';
         }
 
-        if (isset($data['phone'])) {
+        if (isset($data['phone']))
+        {
             $phone = $data['phone'];
-            if (empty($phone)) {
+            if (empty($phone))
+            {
                 $error['phone'] = 'телефон должно быть заполнено';
-            } elseif (strlen($phone) < 2) {
+            } elseif (strlen($phone) < 2)
+            {
                 $error['phone'] = 'Введите телефон правильно';
             }
-        } else {
+        }
+        else
+        {
             $error['phone'] = 'Поле телефон не указано';
         }
 
-        if (isset($data['psw'])) {
+        if (isset($data['psw']))
+        {
             $psw = $data['psw'];
-            if (empty($psw)) {
+            if (empty($psw))
+            {
                 $error['psw'] = 'Password должно быть заполнено';
-            } elseif (strlen($psw) < 2) {
+            }
+            elseif (strlen($psw) < 2)
+            {
                 $error['psw'] = 'Введите password правильно';
             }
 
-        } else {
+        }
+        else
+        {
             $error['psw'] = 'Поле password не указано';
         }
 

@@ -4,8 +4,8 @@ namespace Model;
 
 use Controller\ProductController;
 
-class Product extends Model  {
-
+class Product extends Model
+{
     private int $id;
     private string $title;
     private string $price;
@@ -27,7 +27,9 @@ class Product extends Model  {
         $data = $stmt->fetchAll();
         $productAll = [];
         foreach ($data as $product){
-            $productAll[] = new Product($product['id'], $product['title'], $product['price'], $product['descr'], $product['pictures']);
+            $productAll[] = new Product($product['id'], $product['title'],
+                                        $product['price'], $product['descr'],
+                                        $product['pictures']);
         }
 
         return  $productAll;
@@ -58,28 +60,4 @@ class Product extends Model  {
         return $this->pictures;
     }
 
-    public function setId(int $id): void
-    {
-        $this->id = $id;
-    }
-
-    public function setTitle(string $title): void
-    {
-        $this->title = $title;
-    }
-
-    public function setPrice(string $price): void
-    {
-        $this->price = $price;
-    }
-
-    public function setDesr(string $desr): void
-    {
-        $this->desr = $desr;
-    }
-
-    public function setPictures(string $pictures): void
-    {
-        $this->pictures = $pictures;
-    }
 }
