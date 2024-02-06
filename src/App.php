@@ -8,10 +8,10 @@ require_once './../Autoloader.php';
 
 Autoloader::registrate();
 
-class App {
+class App
+{
 
     private array $routes = [
-
         '/login' => [
            'GET' => [
                'class' => UserController::class,
@@ -41,13 +41,6 @@ class App {
             ]
         ],
 
-        '/add-product' => [
-            'POST' => [
-                'class' => ProductController::class,
-                'method' => 'addProduct'
-            ]
-        ],
-
         '/plusProduct' => [
             'POST' => [
                 'class' => ProductController::class,
@@ -69,14 +62,17 @@ class App {
             ]
         ]
     ];
-    public function run(){
+    public function run()
+    {
 
         $requestUri = $_SERVER['REQUEST_URI'];
         $requestMethod = $_SERVER['REQUEST_METHOD'];
 
 
-        if ($this->routes[$requestUri]){
-            if ($this->routes[$requestUri][$requestMethod]){
+        if ($this->routes[$requestUri])
+        {
+            if ($this->routes[$requestUri][$requestMethod])
+            {
 
                 $obj = new $this->routes[$requestUri][$requestMethod]['class'];
                 $method =  $this->routes[$requestUri][$requestMethod]['method'];

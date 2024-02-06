@@ -35,6 +35,36 @@ class Product extends Model
         return  $productAll;
     }
 
+    /**
+     * @param $userId
+     * @return Product[]
+     */
+    public static function getAllByUserId($userId): array
+    {
+        $sql = <<<SQL
+                SELECT * FROM products p
+                    INNER JOIN user_products up
+                ON p.id = up.product_id
+                    WHERE up.user_id = :user_id;
+        SQL;
+
+        $stmt = self::getPDO()->prepare($sql);
+        $stmt->execute(['user_id' => $userId]);
+
+        $data = $stmt->fetchAll();
+        $productUser = [];
+        foreach ($data as $product){
+            $productUser[$product['id']] = new Product($product['id'],
+                                                $product['title'],
+                                                $product['price'],
+                                                $product['descr'],
+                                                $product['pictures']);
+        }
+        return $productUser;
+    }
+
+
+
     public function getId(): int
     {
         return $this->id;

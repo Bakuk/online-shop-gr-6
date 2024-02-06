@@ -1,25 +1,24 @@
 <section class="catalog">
     <div class="container">
-            <?php echo "Корзина пользователя " .$_SESSION['name'] ?>
+        <?php echo "Корзина пользователя " .$_SESSION['name'] ?>
         <div class="catalog__flex">
             <div class="catalog__row">
-                <?php foreach($products as $product):?>
-
-                    <div class="catalog__col">
-                        <div class="catalog__card card">
-                            <div class="card__image"><img src="<?php echo $product->getPictures()?>" alt=""/></div>
-                            <div class="card__body">
-                                <div class="card__title"><?php echo $product->getTitle()?></div>
-                                <div class="card__text"><?php echo $product->getDesr()?></div>
-                                <div class="card__text">Quantity: <?php echo $product->getQuantity()?></div>
-                                <div class="card__bottom">
-                                    <div class="card__cost">$<?php echo $product->getPrice()?></div>
+                <?php foreach($userProducts as $userProduct):?>
+                    <?php $product = $products[$userProduct->getId()]; ?>
+                        <div class="catalog__col">
+                            <div class="catalog__card card">
+                                <div class="card__image"><img src="<?php echo $product->getPictures()?>" alt=""/></div>
+                                <div class="card__body">
+                                    <div class="card__title"><?php echo $product->getTitle()?></div>
+                                    <div class="card__text"><?php echo $product->getDesr()?></div>
+                                    <div class="card__text">Quantity: <?php echo $userProduct->getQuantity()?></div>
+                                    <div class="card__bottom">
+                                        <div class="card__cost">$<?php echo $product->getPrice()?></div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                    </div>
-                    </form>
+                        </div>
                 <?php endforeach; ?>
             </div>
         </div>

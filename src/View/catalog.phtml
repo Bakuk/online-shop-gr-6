@@ -4,7 +4,9 @@
 
 
         <br>
-        <a href="cart"><span class="btn btn-2"><?php echo $count['sum'] ?></span><input class="btn btn-2 btn-sep icon-cart" type="submit" value="Корзина"> </a>
+        <a href="cart"><span class="btn btn-2"><?php echo $count ?? 0 ?></span>
+            <input class="btn btn-2 btn-sep icon-cart" type="submit" value="Корзина">
+        </a>
 
 
         <div class="catalog__flex">

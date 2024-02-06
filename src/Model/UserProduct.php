@@ -42,14 +42,38 @@ class UserProduct extends Model
         $stmt->execute(['user_id' => $userId, 'product_id' => $productId, 'quantity' => $quantity]); //экранирование данных
     }
 
-    public static function count(int $user_id)
+    public static function getCount(int $userId): int|null
     {
-        $stmt = self::getPDO()->prepare('SELECT sum(quantity)
+        $stmt = self::getPDO()->prepare('SELECT sum(quantity) as count
                                                 FROM user_products
                                                         WHERE user_id = :user_id;');
-        $stmt->execute(['user_id' => $user_id]);
+        $stmt->execute(['user_id' => $userId]);
         $sum =  $stmt->fetch();
-        return $sum;
+
+        if (isset($sum['count'])){
+            return $sum['count'];
+        }
+
+        return null;
+    }
+
+    public static function getAllByUserIdAndProductIds(int $userId, ):array
+    {
+        $sql = <<<SQL
+                SELECT * FROM user_products
+                    WHERE user_id = :user_id;
+        SQL;
+
+        $stmt = self::getPDO()->prepare($sql);
+        $stmt->execute(['user_id' => $userId]);
+
+        $data = $stmt->fetchAll();
+        $productsUser = [];
+        foreach ($data as $productUser){
+            $productsUser[] = new UserProduct($productUser['id'], $productUser['user_id'],
+                $productUser['product_id'], $productUser['quantity']);
+        }
+        return $productsUser;
     }
 
     public static function updateQuantityAdd(int $productId, int $userId)
@@ -68,7 +92,9 @@ class UserProduct extends Model
         $stmt->execute(['productId' => $productId, 'userId' => $userId]);
     }
 
-    public static function getFilterUserProduct(int $userId, int $productId)
+
+
+    public static function getFilterUserProduct(int $userId, int $productId):array
     {
         $stmt = self::getPDO()->prepare('SELECT * FROM user_products
                                                              WHERE product_id = :productId 
@@ -84,36 +110,5 @@ class UserProduct extends Model
         }
         return  $userProduct;
     }
-    /*
-    public static function getAllOnCart(int $user_id) {
-
-        $stmt = self::getPDO()->prepare('SELECT user_products.id, user_products.user_id, 
-                                                            user_products.product_id, 
-                                                            title, quantity, price, 
-                                                            descr, pictures 
-                                                FROM user_products
-                                                    JOIN products
-                                                        ON user_products.product_id=products.id
-                                                            WHERE user_id = :user_id');
-        $stmt->execute(['user_id' => $user_id]);
-        $data =  $stmt->fetchAll();
-        $productCart = [];
-        foreach ($data as $product){
-            $productCart[] = new UserProduct($product['id'],
-                                    $product['user_id'],
-                                    $product['product_id'],
-                                    $product['quantity'],
-                                    $product['title'],
-                                    $product['price'],
-                                    $product['descr'],
-                                    $product['pictures']);
-        }
-
-
-        return  $productCart;
-
-    }
-    */
-
 
 }

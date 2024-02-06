@@ -26,7 +26,7 @@ class User extends Model
         return new User($data['id'], $data['name'], $data['phone'], $data['psw']);
     }
 
-    public function create(string $name, string $phone, string $psw) {
+    public static function create(string $name, string $phone, string $psw) {
 
         $stmt = self::getPDO()->prepare('INSERT INTO users (name, phone, psw) values (:name, :phone, :psw)'); //защита от некоректных данных
         $stmt->execute(['name' => $name, 'phone' => $phone, 'psw' => $psw]); //экранирование данных
