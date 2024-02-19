@@ -4,10 +4,18 @@ namespace Controller;
 
 use Model\Product;
 use Model\UserProduct;
+use Service\SessionAuthenticationService;
 
 class ProductController
 {
-    public function getCatalog()
+    private SessionAuthenticationService $authenticationService;
+
+    public function __construct()
+    {
+        $this->authenticationService = new SessionAuthenticationService();
+    }
+
+    public function getCatalog():void
     {
         session_start();
 
@@ -22,10 +30,13 @@ class ProductController
             header('location: /registrate');
         }
     }
-    public function plusProduct()
+    public function plusProduct():void
     {
         session_start();
+
         if (isset($_SESSION['id'])) {
+
+
             $userId = $_SESSION['id'];
             $productId = (int)$_REQUEST['product-id'];
             $quantity = 1;
@@ -50,7 +61,7 @@ class ProductController
         }
     }
 
-   public function minusProduct()
+   public function minusProduct():void
    {
         session_start();
         if (isset($_SESSION['id'])) {
@@ -72,7 +83,7 @@ class ProductController
         }
     }
 
-    public function getCart()
+    public function getCart():void
     {
         session_start();
         if (isset($_SESSION['id'])) {

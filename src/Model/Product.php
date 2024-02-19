@@ -39,7 +39,7 @@ class Product extends Model
      * @param $userId
      * @return Product[]
      */
-    public static function getAllByUserId($userId): array
+    public static function getAllByUserId(int $userId): array
     {
         $sql = <<<SQL
                 SELECT * FROM products p

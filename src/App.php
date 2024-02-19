@@ -1,84 +1,61 @@
 <?php
 
-
-use Controller\ProductController;
-use Controller\UserController;
-
-require_once './../Autoloader.php';
-
-Autoloader::registrate();
-
 class App
 {
+    private array $routes = [];
 
-    private array $routes = [
-        '/login' => [
-           'GET' => [
-               'class' => UserController::class,
-               'method' => 'get_login'
-           ],
-            'POST' => [
-                'class' => UserController::class,
-                'method' => 'post_login'
-            ]
-        ],
-
-        '/catalog' => [
-            'GET' => [
-                'class' => ProductController::class,
-                'method' => 'getCatalog'
-            ]
-        ],
-
-        '/registrate' => [
-            'GET' => [
-                'class' => UserController::class,
-                'method' => 'getRegistrate'
-            ],
-            'POST' => [
-                'class' => UserController::class,
-                'method' => 'postRegistrate'
-            ]
-        ],
-
-        '/plusProduct' => [
-            'POST' => [
-                'class' => ProductController::class,
-                'method' => 'plusProduct'
-            ]
-        ],
-
-        '/minusProduct' => [
-            'POST' => [
-                'class' => ProductController::class,
-                'method' => 'minusProduct'
-            ]
-        ],
-
-        '/cart' => [
-            'GET' => [
-                'class' => ProductController::class,
-                'method' => 'getCart'
-            ]
-        ]
-    ];
     public function run()
     {
 
         $requestUri = $_SERVER['REQUEST_URI'];
         $requestMethod = $_SERVER['REQUEST_METHOD'];
 
+        if (isset($this->routes[$requestUri])) {
+            if (isset($this->routes[$requestUri][$requestMethod])) {
+                $handler = $this->routes[$requestUri][$requestMethod];
 
-        if ($this->routes[$requestUri])
-        {
-            if ($this->routes[$requestUri][$requestMethod])
-            {
+                $class = $handler['class'];
+                $method = $handler['method'];
+                $requestRoute = $handler['request'];
 
-                $obj = new $this->routes[$requestUri][$requestMethod]['class'];
-                $method =  $this->routes[$requestUri][$requestMethod]['method'];
-                $obj->$method();
+                $obj = new $class;
+
+                if(empty($requestRoute)){
+                    $request = new \Request\Request($requestMethod, $requestUri, headers_list(), $_REQUEST);
+                    $obj->$method($request);
+                } else {
+                    $request = new $requestRoute($requestMethod, $requestUri, headers_list(), $_REQUEST);
+                    $obj->$method($request);
+                }
+
+            } else {
+                echo "Такого метода не существует";
             }
+        } else {
+            echo "неправильный uri";
         }
+
+    }
+
+
+    public function get(string $url, string $class, string $methodName, string $request = null): void
+    {
+        $this->routes[$url]['GET'] = [
+            'class' => $class,
+            'method' => $methodName,
+            'request' => $request
+        ];
+
+
+    }
+
+    public function post(string $url, string $class, string $methodName, string $request = null): void
+    {
+        $this->routes[$url]['POST'] = [
+            'class' => $class,
+            'method' => $methodName,
+            'request' => $request
+        ];
 
     }
 }

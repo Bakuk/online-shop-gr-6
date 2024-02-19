@@ -17,16 +17,33 @@ class User extends Model
         $this->psw = $psw;
     }
 
-    public static function search(string $name, string $psw):User
+    public static function search(string $name, string $psw): ?User
     {
         $stmt = self::getPDO()->prepare('SELECT * FROM users WHERE name = :name and psw = :psw');
 
         $stmt->execute(['name' => $name, 'psw' => $psw]);
         $data = $stmt->fetch();
-        return new User($data['id'], $data['name'], $data['phone'], $data['psw']);
+        if (!empty($data))
+            return new User($data['id'], $data['name'], $data['phone'], $data['psw']);
+
+        return null;
+
     }
 
-    public static function create(string $name, string $phone, string $psw) {
+    public static function getOneById(int $id): ?User
+    {
+        $stmt = self::getPDO()->prepare('SELECT * FROM users WHERE id = :id ');
+
+        $stmt->execute(['id' => $id]);
+        $data = $stmt->fetch();
+        if (!empty($data))
+            return new User($data['id'], $data['name'], $data['phone'], $data['psw']);
+
+        return null;
+
+    }
+
+    public static function create(string $name, string $phone, string $psw): void {
 
         $stmt = self::getPDO()->prepare('INSERT INTO users (name, phone, psw) values (:name, :phone, :psw)'); //защита от некоректных данных
         $stmt->execute(['name' => $name, 'phone' => $phone, 'psw' => $psw]); //экранирование данных

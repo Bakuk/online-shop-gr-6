@@ -36,7 +36,7 @@ class UserProduct extends Model
         $this->productId = $productId;
         $this->quantity = $quantity;
     }
-    public static function create(int $userId, int $productId, int $quantity)
+    public static function create(int $userId, int $productId, int $quantity): void
     {
         $stmt = self::getPDO()->prepare('INSERT INTO user_products (user_id, product_id, quantity) values (:user_id, :product_id, :quantity)'); //защита от некоректных данных
         $stmt->execute(['user_id' => $userId, 'product_id' => $productId, 'quantity' => $quantity]); //экранирование данных
@@ -76,7 +76,7 @@ class UserProduct extends Model
         return $productsUser;
     }
 
-    public static function updateQuantityAdd(int $productId, int $userId)
+    public static function updateQuantityAdd(int $productId, int $userId):void
     {
         $stmt = self::getPDO()->prepare('UPDATE user_products
                                                              SET quantity = quantity + 1
@@ -84,7 +84,7 @@ class UserProduct extends Model
         $stmt->execute(['productId' => $productId, 'userId' => $userId]);
     }
 
-    public static function updateQuantityMinus(int $productId, int $userId)
+    public static function updateQuantityMinus(int $productId, int $userId):void
     {
         $stmt = self::getPDO()->prepare('UPDATE user_products
                                                              SET quantity = quantity - 1
