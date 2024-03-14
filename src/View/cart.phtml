@@ -13,13 +13,18 @@
                                     <div class="card__text"><?php echo $product->getDesr()?></div>
                                     <div class="card__text">Quantity: <?php echo $userProduct->getQuantity()?></div>
                                     <div class="card__bottom">
-                                        <div class="card__cost">$<?php echo $product->getPrice()?></div>
+                                        <div class="card__cost">Цена $<?php echo $product->getPrice()?></div>
                                     </div>
                                 </div>
                             </div>
 
                         </div>
                 <?php endforeach; ?>
+
+                <a href="order">
+                    <input class="btn btn-2 btn-sep icon-cart" type="submit" value="Оформить заказ">
+                </a>
+
             </div>
         </div>
     </div>

@@ -46,7 +46,7 @@ class User extends Model
     public static function create(string $name, string $phone, string $psw): void {
 
         $stmt = self::getPDO()->prepare('INSERT INTO users (name, phone, psw) values (:name, :phone, :psw)'); //защита от некоректных данных
-        $stmt->execute(['name' => $name, 'phone' => $phone, 'psw' => $psw]); //экранирование данных
+        $stmt->execute(['name' => $name, 'phone' => $phone, 'psw' => $psw]);
     }
 
     public function getId(): int
@@ -67,5 +67,42 @@ class User extends Model
     public function getPsw(): string
     {
         return $this->psw;
+    }
+
+
+    public static function all(): ?array
+    {
+        $sql = <<<SQL
+            select *
+            from users
+        SQL;
+
+        $stmt = self::getPDO()->query($sql);
+        $users = $stmt->fetchAll();
+
+        foreach ($users as $user) {
+            $data[] = new User(
+                $user['id'],
+                $user['name'],
+                $user['email'],
+                $user['password']
+            );
+        }
+
+        if (empty($data)) {
+            return null;
+        }
+
+        return $data;
+    }
+
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'email' => $this->email,
+        ];
     }
 }

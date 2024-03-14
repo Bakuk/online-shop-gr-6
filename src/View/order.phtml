@@ -1,83 +1,192 @@
-<section class="catalog">
-    <div class="container">
-        <?php echo "Добро пожаловать " . $user->getName() ?>
+<form action="/order" method="POST">
 
+    <header>
+        <h2>Оформление заказа</h2>
+    </header>
 
-        <br>
-        <a href="cart"><span class="btn btn-2"><?php echo $count ?? 0 ?></span>
-            <input class="btn btn-2 btn-sep icon-cart" type="submit" value="Корзина">
-        </a>
+    <div>
+        <label class="desc" id="title1" for="Field1">ФИО</label>
+        <div>
+            <input id="Field1" name="name" type="text" class="field text fn" value="<?php echo $user->getName() ?>" size="8" tabindex="1">
+        </div>
+    </div>
 
+    <div>
+        <label class="desc" id="title1" for="Field1">Телефон</label>
+        <div>
+            <input id="Field1" name="phone" type="text" class="field text fn" value="<?php echo $user->getPhone() ?>" size="8" tabindex="1">
+        </div>
+    </div>
 
-        <div class="catalog__flex">
-            <div class="catalog__row">
-                <?php foreach($products as $product):?>
+    <div>
 
+        <label class="desc" id="title4" for="Field4">
+            Адрес
+        </label>
+
+        <div>
+            <textarea id="Field4" name="address" spellcheck="true" rows="10" cols="50" tabindex="4"></textarea>
+        </div>
+    </div>
+
+    <div>
+        <label class="desc" id="title4" for="Field4">
+            Комментарий
+        </label>
+
+        <div>
+            <textarea id="Field4" name="comment" spellcheck="true" rows="10" cols="50" tabindex="4"></textarea>
+        </div>
+    </div>
+
+            <div class="catalog__flex">
+                <div class="catalog__row">
+                    <?php $sum = 0;?>
+                    <?php foreach($userProducts as $userProduct):?>
+                        <?php $product = $products[$userProduct->getId()]; ?>
+                        <?php $sum += $product->getPrice() * $userProduct->getQuantity(); ?>
                         <div class="catalog__col">
                             <div class="catalog__card card">
                                 <div class="card__image"><img src="<?php echo $product->getPictures()?>" alt=""/></div>
                                 <div class="card__body">
                                     <div class="card__title"><?php echo $product->getTitle()?></div>
                                     <div class="card__text"><?php echo $product->getDesr()?></div>
+                                    <div class="card__text">Количество: <?php echo $userProduct->getQuantity()?></div>
+                                    <div class="card__text">Цена: <?php echo $product->getPrice()?> $</div>
                                     <div class="card__bottom">
-                                        <div class="card__cost">$<?php echo $product->getPrice()?></div>
 
-                                        <form class = "plus" action="/plusProduct"  method="POST">
-                                            <input name = "product-id" class = 'product-id' value="<?php echo $product->getId()?>" type="hidden">
-                                            <button class = "btn btn-2" type="submit" name="plus">+</button>
-                                        </form>
-
-                                        <form action="/minusProduct" method="post">
-                                            <input name = "product-id" class = 'product-id' value="<?php echo $product->getId()?>" type="hidden">
-                                            <button class = "btn btn-2" type="submit" name="minus">-</button>
-                                        </form>
-
+                                        <div class="card__cost">Сумма
+                                            <input type="text" id = "sumPrice" disabled="disabled" name="sumPrice" size="100"
+                                                   value="<?php echo $product->getPrice() * $userProduct->getQuantity()?> "
+                                                   readonly>$
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
-                <?php endforeach; ?>
+                    <?php endforeach; ?>
+
+                </div>
             </div>
+        <div class="card__cost">Общая сумма
+            <input type="text" id = "sumPrice" disabled="disabled" name="sumPrice" size="100"
+                   value="<?php echo $sum ?? 0 ?> "
+                   readonly>$
         </div>
-    </div>
-</section>
+        <button class="btn btn-2 btn-sep icon-cart" type="submit">Отправить заказ</button>
+</form>
 
-<!--<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-<script>
-   $("document").ready(function() {
-        $('.plus').submit(function() {
-            $.ajax({
-                url: "/plusProduct",
-                method: "POST",
-                dataType: 'html',
-                data: $(this).serialize(),
-                success: function(data) {
-                    console.log(data);
-                    //console.log($('input.product-id').val());
-                }
-            })
-
-        });
-    });
-</script>-->
 
 <style>
-    @import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;700&display=swap");
-    *,
-    *::before,
-    *::after {
+    * {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
         box-sizing: border-box;
     }
+
     body {
-        margin: 0;
+        padding: 20px 15%;
+    }
+    form header {
+        margin: 0 0 20px 0;
+    }
+    form header div {
+        font-size: 90%;
+        color: #999;
+    }
+    #sumPrice{
+        width: 40px;
+        font-size: 18px;
+    }
+    form header h2 {
+        margin: 0 0 5px 0;
+    }
+    form > div {
+        clear: both;
+        overflow: hidden;
+        padding: 1px;
+        margin: 0 0 10px 0;
+    }
+    form > div > fieldset > div > div {
+        margin: 0 0 5px 0;
+    }
+    form > div > label,
+    legend {
+        width: 25%;
+        float: left;
+        padding-right: 10px;
+    }
+    form > div > div,
+    form > div > fieldset > div {
+        width: 75%;
+        float: right;
+    }
+    form > div > fieldset label {
+        font-size: 90%;
+    }
+    fieldset {
+        border: 0;
         padding: 0;
-        font-family: 'Rubik', sans-serif;
     }
-    .container {
-        padding: 0 30px;
-        max-width: 1200px;
-        margin: 0 auto;
+
+    input[type=text],
+    input[type=email],
+    input[type=url],
+    input[type=password],
+    textarea {
+        width: 100%;
+        border-top: 1px solid #ccc;
+        border-left: 1px solid #ccc;
+        border-right: 1px solid #eee;
+        border-bottom: 1px solid #eee;
     }
+    input[type=text],
+    input[type=email],
+    input[type=url],
+    input[type=password] {
+        width: 50%;
+    }
+    input[type=text]:focus,
+    input[type=email]:focus,
+    input[type=url]:focus,
+    input[type=password]:focus,
+    textarea:focus {
+        outline: 0;
+        border-color: #4697e4;
+    }
+
+    @media (max-width: 600px) {
+        form > div {
+            margin: 0 0 15px 0;
+        }
+        form > div > label,
+        legend {
+            width: 100%;
+            float: none;
+            margin: 0 0 5px 0;
+        }
+        form > div > div,
+        form > div > fieldset > div {
+            width: 100%;
+            float: none;
+        }
+        input[type=text],
+        input[type=email],
+        input[type=url],
+        input[type=password],
+        textarea,
+        select {
+            width: 100%;
+        }
+    }
+    @media (min-width: 1200px) {
+        form > div > label,
+        legend {
+            text-align: right;
+        }
+    }
+
     .card {
         border-radius: 15px;
         overflow: hidden;
@@ -374,4 +483,3 @@
     }
 
 </style>
-

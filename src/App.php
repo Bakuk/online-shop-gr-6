@@ -1,9 +1,22 @@
 <?php
 
+
+use Service\Autentication\SessionAuthenticationService;
+use Service\LoggerService;
 class App
 {
     private array $routes = [];
+    private \Core\Container $container;
+    public function __construct(\Core\Container $container)
+    {
+        $this->container = $container;
+    }
 
+    public function bootstrap()
+    {
+        $pdo = $this->container->get(PDO::class);
+        \Model\Model::init($pdo);
+    }
     public function run()
     {
 
@@ -13,20 +26,33 @@ class App
         if (isset($this->routes[$requestUri])) {
             if (isset($this->routes[$requestUri][$requestMethod])) {
                 $handler = $this->routes[$requestUri][$requestMethod];
-
+                $this->bootstrap();
                 $class = $handler['class'];
                 $method = $handler['method'];
                 $requestRoute = $handler['request'];
 
-                $obj = new $class;
 
-                if(empty($requestRoute)){
+                $obj = $this->container->get($class);
+
+
+                if (empty($requestRoute)) {
                     $request = new \Request\Request($requestMethod, $requestUri, headers_list(), $_REQUEST);
-                    $obj->$method($request);
                 } else {
                     $request = new $requestRoute($requestMethod, $requestUri, headers_list(), $_REQUEST);
-                    $obj->$method($request);
+
                 }
+
+                try {
+
+                    $response = $obj->$method($request);
+
+                    echo $response;
+
+                } catch (Throwable $exeption) {
+                    LoggerService::error($exeption);
+                    require_once './../View/500.html';
+                }
+
 
             } else {
                 echo "Такого метода не существует";
@@ -58,4 +84,6 @@ class App
         ];
 
     }
+
+
 }

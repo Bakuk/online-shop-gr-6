@@ -90,4 +90,9 @@ class Product extends Model
         return $this->pictures;
     }
 
+    private function hydrateAll(array $data): array
+    {
+
+    }
+
 }

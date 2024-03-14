@@ -2,96 +2,97 @@
 
 namespace Controller;
 
+use Core\ViewRenderer;
 use Model\Product;
 use Model\UserProduct;
-use Service\SessionAuthenticationService;
+use Request\MinusProductRequest;
+use Request\PlusProductRequest;
+use Service\Autentication\AuthenticationServiceInterface;
+use Service\CartService;
+use Service\OrderService;
 
 class ProductController
 {
-    private SessionAuthenticationService $authenticationService;
-
-    public function __construct()
+    private AuthenticationServiceInterface $authenticationService;
+    private ViewRenderer $viewRenderer;
+    private CartService $cartService;
+    public function __construct(AuthenticationServiceInterface $authenticationService,
+                                CartService $cartService,
+                                ViewRenderer $viewRenderer)
     {
-        $this->authenticationService = new SessionAuthenticationService();
+        $this->authenticationService = new $authenticationService;
+        $this->cartService = new $cartService;
+        $this->viewRenderer = new $viewRenderer();
     }
 
-    public function getCatalog():void
+    public function getCatalog():string
     {
-        session_start();
+        if(!$this->authenticationService->check()){
+            header('location: /login');
+        }
 
-        if (isset($_SESSION['id'])) {
+        $user = $this->authenticationService->getCurrentUser();
+        if(!$user) {
+            header('location: /login');
+        }
 
-            $userId = $_SESSION['id'];
-            $products = Product::getAll();
-            $count = UserProduct::getCount($userId);
-            require_once './../View/catalog.phtml';
+        $userId = $user->getId();
+        $products = Product::getAll();
+        $count = UserProduct::getCount($userId);
 
-        } else  {
+        return $this->viewRenderer->render('catalog.phtml', [
+            'user' => $user,
+            'products' => $products,
+            'count' => $count
+        ]);
+
+    }
+    public function plusProduct(PlusProductRequest $request):void
+    {
+
+        if (!$this->authenticationService->check()) {
             header('location: /registrate');
         }
-    }
-    public function plusProduct():void
-    {
-        session_start();
 
-        if (isset($_SESSION['id'])) {
+        $user = $this->authenticationService->getCurrentUser();
+        if(!$user) {
+            header('location: /login');
+        }
 
+        $productId = (int)$request->getId();
 
-            $userId = $_SESSION['id'];
-            $productId = (int)$_REQUEST['product-id'];
-            $quantity = 1;
+        $plus = $request->getPlus();
+        if (isset($plus)) {
 
-            if (isset($_POST['plus'])) {
-                $data = UserProduct::getFilterUserProduct($userId, $productId);
+            $this->cartService->plus($user, $productId);
 
-                if(!empty($data)) {
-                    UserProduct::updateQuantityAdd($productId, $userId);
-                    header('location: /catalog' );
-                } else {
-                    UserProduct::create($userId, $productId, $quantity);
-                    header('location: /catalog' );
-                }
-
-                header('location: /catalog' );
-            } else {
-                echo 'Error';
-            }
+            header('location: /catalog' );
         } else {
-            header('location: /registrate');
+            echo 'Error';
         }
     }
 
-   public function minusProduct():void
+   public function minusProduct(MinusProductRequest $request):void
    {
-        session_start();
-        if (isset($_SESSION['id'])) {
-            $userId = $_SESSION['id'];
-            $productId = (int)$_REQUEST['product-id'];
 
-            if (isset($_POST['minus'])) {
-                $data = UserProduct::getFilterUserProduct($userId, $productId);
-                if(!empty($data)) {
-                    UserProduct::updateQuantityMinus($productId, $userId);
-                    header('location: /catalog' );
-                } else {
-                    header('location: /catalog' );
-                }
-            }
-        } else
-        {
+       if (!$this->authenticationService->check()) {
             header('location: /registrate');
-        }
+       }
+
+       $user = $this->authenticationService->getCurrentUser();
+       if(!$user) {
+           header('location: /login');
+       }
+
+       $productId = (int)$request->getId();
+
+       $minus = $request->getMinus();
+       if (isset($minus)) {
+           $this->cartService->minus($user, $productId);
+
+           header('location: /catalog' );
+
+       }
     }
 
-    public function getCart():void
-    {
-        session_start();
-        if (isset($_SESSION['id'])) {
-
-            $userId = $_SESSION['id'];
-            $products =  Product::getAllByUserId($userId);
-            $userProducts = UserProduct::getAllByUserIdAndProductIds($userId);
-            require_once './../View/cart.phtml';
-        }
-    }
 }

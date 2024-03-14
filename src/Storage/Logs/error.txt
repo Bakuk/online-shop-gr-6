@@ -1,0 +1,110 @@
+Date: 2024-03-10 14:56:41
+File: /var/www/html/src/App.php
+Line: 51
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-03-10 14:57:19
+File: /var/www/html/src/App.php
+Line: 53
+Message: Failed opening required './../View/get_login.phtml' (include_path='.:/usr/local/lib/php')
+
+Date: 2024-03-10 14:57:26
+File: /var/www/html/src/App.php
+Line: 53
+Message: Failed opening required './../View/get_login.phtml' (include_path='.:/usr/local/lib/php')
+
+Date: 2024-03-10 15:01:52
+File: /var/www/html/src/App.php
+Line: 51
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-03-10 15:01:52
+File: /var/www/html/src/App.php
+Line: 51
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-03-10 15:03:06
+File: /var/www/html/src/App.php
+Line: 51
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-03-10 15:03:15
+File: /var/www/html/src/App.php
+Line: 51
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-03-10 15:03:49
+File: /var/www/html/src/App.php
+Line: 51
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-03-10 15:04:42
+File: /var/www/html/src/App.php
+Line: 51
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-03-10 15:04:45
+File: /var/www/html/src/App.php
+Line: 51
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-03-10 15:20:50
+File: /var/www/html/src/App.php
+Line: 51
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-03-10 15:20:50
+File: /var/www/html/src/View/catalog.phtml
+Line: 3
+Message: Call to a member function getName() on null
+
+Date: 2024-03-10 15:23:50
+File: /var/www/html/src/App.php
+Line: 51
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-03-10 15:23:51
+File: /var/www/html/src/App.php
+Line: 51
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-03-10 15:26:22
+File: /var/www/html/src/App.php
+Line: 51
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-03-10 16:14:30
+File: /var/www/html/src/App.php
+Line: 52
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-03-13 15:34:11
+File: /var/www/html/src/Controller/ProductController.php
+Line: 34
+Message: Call to a member function getId() on null
+
+Date: 2024-03-13 15:34:17
+File: /var/www/html/src/App.php
+Line: 52
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-03-13 15:34:23
+File: /var/www/html/src/App.php
+Line: 52
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-03-13 15:34:34
+File: /var/www/html/src/App.php
+Line: 52
+Message: extract(): Argument #1 ($array) must be of type array, null given
+
+Date: 2024-03-14 07:06:01
+File: /var/www/html/src/Controller/ProductController.php
+Line: 34
+Message: Call to a member function getId() on null
+
+Date: 2024-03-14 07:06:38
+File: /var/www/html/src/Core/ViewRenderer.php
+Line: 7
+Message: Core\ViewRenderer::render(): Argument #1 ($view) must be of type string, null given, called in /var/www/html/src/App.php on line 52
+

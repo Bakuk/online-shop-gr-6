@@ -1,30 +1,28 @@
 <?php
 
 namespace Controller;
+use Core\ViewRenderer;
 use Model\User;
 use Request\LoginRequest;
 use Request\RegistrateRequest;
-use Request\Request;
-use Service\SessionAuthenticationService;
+use Service\Autentication\AuthenticationServiceInterface;
 
 class UserController
 {
-    private SessionAuthenticationService $authenticationService;
-    public function __construct()
+    private AuthenticationServiceInterface $authenticationService;
+    private ViewRenderer $viewRenderer;
+    public function __construct(AuthenticationServiceInterface $authenticationService, ViewRenderer $viewRenderer)
     {
-        $this->authenticationService = new SessionAuthenticationService();
+        $this->authenticationService = new $authenticationService;
+        $this->viewRenderer = new $viewRenderer;
     }
-    public function getRegistrate()
+    public function getRegistrate():string
     {
-        require_once './../View/get_registrate.phtml';
+
+        return $this->viewRenderer->render('get_registrate.phtml', []);
     }
 
-    public function get_login()
-    {
-        require_once './../View/get_login.html';
-    }
-
-    public function postRegistrate(RegistrateRequest $request)
+    public function postRegistrate(RegistrateRequest $request):string
     {
 
         $errors = [];
@@ -47,9 +45,15 @@ class UserController
             echo "Данные не добавлены";
         }
 
-        require_once './../View/get_registrate.phtml';
+        return $this->viewRenderer->render('get_registrate.phtml', ['errors' => $errors]);
+
     }
 
+    public function get_login()
+    {
+        return $this->viewRenderer->render('get_login.html', []);
+    }
+    
     public function post_login(LoginRequest $request)
     {
         $name = $request->getName();
