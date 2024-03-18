@@ -1,8 +1,8 @@
 <?php
 
-namespace Service;
+namespace Core\src\Logger;
 
-class LoggerService
+class   LoggerService
 {
     private const STORAGE_PATH = './../Storage/Logs/';
     public static function error(\Throwable $exception):void

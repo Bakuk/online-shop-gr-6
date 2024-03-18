@@ -1,11 +1,12 @@
 <?php
 
 namespace Service;
-use Model\Model;
-use Model\Product;
+use Core\src\Model\Model;
 use Model\Order;
-use Model\UserProduct;
 use Model\OrderedProduct;
+use Model\Product;
+use Model\UserProduct;
+
 class OrderService
 {
     public function create($user, $name, $phone, $address, $comment)

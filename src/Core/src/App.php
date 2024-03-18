@@ -1,13 +1,19 @@
 <?php
 
 
-use Service\Autentication\SessionAuthenticationService;
-use Service\LoggerService;
+namespace Core\src;
+
+use Core\PDO;
+use Core\src;
+use Core\src\Logger\LoggerService;
+use Core\Throwable;
+
 class App
 {
     private array $routes = [];
-    private \Core\Container $container;
-    public function __construct(\Core\Container $container)
+    private src\Container\Container $container;
+
+    public function __construct(src\Container\Container $container)
     {
         $this->container = $container;
     }
@@ -15,8 +21,9 @@ class App
     public function bootstrap()
     {
         $pdo = $this->container->get(PDO::class);
-        \Model\Model::init($pdo);
+        src\Model\Model::init($pdo);
     }
+
     public function run()
     {
 
@@ -36,7 +43,7 @@ class App
 
 
                 if (empty($requestRoute)) {
-                    $request = new \Request\Request($requestMethod, $requestUri, headers_list(), $_REQUEST);
+                    $request = new src\Request\Request($requestMethod, $requestUri, headers_list(), $_REQUEST);
                 } else {
                     $request = new $requestRoute($requestMethod, $requestUri, headers_list(), $_REQUEST);
 

@@ -2,14 +2,13 @@
 
 namespace Controller;
 
-use Core\ViewRenderer;
+use Core\src\AuthenticationServiceInterface;
+use Core\src\ViewRenderer;
 use Model\Product;
 use Model\UserProduct;
 use Request\MinusProductRequest;
 use Request\PlusProductRequest;
-use Service\Autentication\AuthenticationServiceInterface;
 use Service\CartService;
-use Service\OrderService;
 
 class ProductController
 {

@@ -108,3 +108,13 @@ File: /var/www/html/src/Core/ViewRenderer.php
 Line: 7
 Message: Core\ViewRenderer::render(): Argument #1 ($view) must be of type string, null given, called in /var/www/html/src/App.php on line 52
 
+Date: 2024-03-14 15:56:30
+File: /var/www/html/src/Controller/ProductController.php
+Line: 39
+Message: Call to a member function getId() on null
+
+Date: 2024-03-18 13:03:50
+File: /var/www/html/src/Controller/ProductController.php
+Line: 39
+Message: Call to a member function getId() on null
+

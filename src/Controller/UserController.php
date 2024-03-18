@@ -1,11 +1,11 @@
 <?php
 
 namespace Controller;
-use Core\ViewRenderer;
+use Core\src\AuthenticationServiceInterface;
+use Core\src\ViewRenderer;
 use Model\User;
 use Request\LoginRequest;
 use Request\RegistrateRequest;
-use Service\Autentication\AuthenticationServiceInterface;
 
 class UserController
 {

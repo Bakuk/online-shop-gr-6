@@ -2,10 +2,10 @@
 
 namespace Controller;
 
-use Core\ViewRenderer;
+use Core\src\AuthenticationServiceInterface;
+use Core\src\ViewRenderer;
 use Model\Product;
 use Model\UserProduct;
-use Service\Autentication\AuthenticationServiceInterface;
 use Service\CartService;
 
 class CartController

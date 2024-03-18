@@ -1,6 +1,6 @@
 <?php
 
-namespace Service\Autentication;
+namespace Core\src;
 use Model\User;
 
 interface AuthenticationServiceInterface

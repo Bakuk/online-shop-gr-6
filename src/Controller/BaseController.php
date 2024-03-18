@@ -1,6 +1,8 @@
 <?php
-use Service\Autentication\AuthenticationServiceInterface;
-use Core\ViewRenderer;
+
+use Core\src\AuthenticationServiceInterface;
+use Core\src\ViewRenderer;
+
 abstract class BaseController
 {
     protected AuthenticationServiceInterface $authenticationService;

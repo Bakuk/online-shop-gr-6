@@ -2,7 +2,7 @@
 
 namespace Model;
 
-use Controller\ProductController;
+use Core\src\Model\Model;
 
 class Product extends Model
 {
