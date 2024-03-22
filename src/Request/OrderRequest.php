@@ -2,8 +2,6 @@
 
 namespace Request;
 
-use Core\src\Request\Request;
-
 class OrderRequest extends Request
 {
     public function getName(): string

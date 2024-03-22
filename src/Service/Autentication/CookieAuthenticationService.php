@@ -2,7 +2,6 @@
 
 namespace Service\Autentication;
 
-use Core\src\AuthenticationServiceInterface;
 use Model\User;
 
 class CookieAuthenticationService implements AuthenticationServiceInterface

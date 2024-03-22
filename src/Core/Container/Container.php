@@ -1,7 +1,7 @@
 <?php
 
-namespace Core\src\Container;
 
+namespace Core\Container;
 class Container
 {
     private array $services;
@@ -13,7 +13,7 @@ class Container
 
     public function get(string $class): object
     {
-        if (isset($this->services[$class])){
+        if (isset($this->services[$class])) {
             $callback = $this->services[$class];
 
             $result = $callback();

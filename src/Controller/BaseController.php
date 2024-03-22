@@ -1,7 +1,7 @@
 <?php
 
-use Core\src\AuthenticationServiceInterface;
-use Core\src\ViewRenderer;
+use Core\ViewRenderer;
+use Service\Autentication\AuthenticationServiceInterface;
 
 abstract class BaseController
 {

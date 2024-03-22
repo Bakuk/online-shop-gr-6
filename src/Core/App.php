@@ -1,19 +1,21 @@
 <?php
 
 
-namespace Core\src;
+namespace Core;
 
-use Core\PDO;
-use Core\src;
-use Core\src\Logger\LoggerService;
-use Core\Throwable;
+use Core\Container\Container;
+use Model;
+use PDO;
+use Request;
+use Service\LoggerService;
+use Throwable;
 
 class App
 {
     private array $routes = [];
-    private src\Container\Container $container;
+    private Container $container;
 
-    public function __construct(src\Container\Container $container)
+    public function __construct(Container $container)
     {
         $this->container = $container;
     }
@@ -21,7 +23,7 @@ class App
     public function bootstrap()
     {
         $pdo = $this->container->get(PDO::class);
-        src\Model\Model::init($pdo);
+        Model\Model::init($pdo);
     }
 
     public function run()
@@ -43,7 +45,7 @@ class App
 
 
                 if (empty($requestRoute)) {
-                    $request = new src\Request\Request($requestMethod, $requestUri, headers_list(), $_REQUEST);
+                    $request = new Request\Request($requestMethod, $requestUri, headers_list(), $_REQUEST);
                 } else {
                     $request = new $requestRoute($requestMethod, $requestUri, headers_list(), $_REQUEST);
 

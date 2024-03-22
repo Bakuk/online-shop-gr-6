@@ -2,8 +2,6 @@
 
 namespace Model;
 
-use Core\src\Model\Model;
-
 class User extends Model
 {
     private int $id;

@@ -1,7 +1,7 @@
 <?php
 
 namespace Service;
-use Core\src\Model\Model;
+use Model\Model;
 use Model\Order;
 use Model\OrderedProduct;
 use Model\Product;

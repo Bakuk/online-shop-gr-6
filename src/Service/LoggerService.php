@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\src\Logger;
+namespace Service;
 
 class   LoggerService
 {

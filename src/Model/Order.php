@@ -2,8 +2,6 @@
 
 namespace Model;
 
-use Core\src\Model\Model;
-
 class Order extends Model
 {
     private int $id;

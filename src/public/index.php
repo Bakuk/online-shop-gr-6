@@ -4,39 +4,41 @@ use Controller\CartController;
 use Controller\OrderController;
 use Controller\ProductController;
 use Controller\UserController;
-use Core\src\App;
-use Core\src\Autoloader;
+use Core\App;
+use Core\Autoloader;
 
-require_once './../Autoloader.php';
-require_once './../App.php';
+
+require_once './../Core/Autoloader.php';
+require_once './../Core/App.php';
+
 Autoloader::registrate();
 
-$container = new \Core\src\Container\Container();
+$container = new \Core\Container\Container();
 
 $container->set(UserController::class, function () {
     $authentication = new Service\Autentication\SessionAuthenticationService();
-    $viewRender = new \Core\src\ViewRenderer();
+    $viewRender = new Core\ViewRenderer();
     return new UserController($authentication, $viewRender);
 });
 
 $container->set(ProductController::class, function () {
     $authentication = new Service\Autentication\SessionAuthenticationService();
     $cartService = new \Service\CartService();
-    $viewRenderer = new \Core\src\ViewRenderer();
+    $viewRenderer = new Core\ViewRenderer();
     return new ProductController($authentication, $cartService, $viewRenderer);
 });
 
 $container->set(OrderController::class, function () {
     $authentication = new Service\Autentication\SessionAuthenticationService();
     $orderService = new \Service\OrderService();
-    $viewRenderer = new \Core\src\ViewRenderer();
+    $viewRenderer = new Core\ViewRenderer();
     return new OrderController($authentication, $orderService, $viewRenderer);
 });
 
 $container->set(CartController::class, function () {
     $authentication = new Service\Autentication\SessionAuthenticationService();
     $cartService = new \Service\CartService();
-    $viewRenderer = new \Core\src\ViewRenderer();
+    $viewRenderer = new Core\ViewRenderer();
     return new CartController($authentication, $cartService,  $viewRenderer);
 });
 

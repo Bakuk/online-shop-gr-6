@@ -2,8 +2,6 @@
 
 namespace Model;
 
-use Core\src\Model\Model;
-
 class OrderedProduct extends Model
 {
     public static function create(int $orderId, int $productId, int $quantity, float $total) : void
