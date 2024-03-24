@@ -2,6 +2,8 @@
 
 namespace Request;
 
+use Core\src\Request\Request;
+
 class PlusProductRequest extends Request
 {
     public function getPlus(): string

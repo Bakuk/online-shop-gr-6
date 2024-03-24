@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Core\Container;
+namespace Core\src\Container;
 class Container
 {
     private array $services;

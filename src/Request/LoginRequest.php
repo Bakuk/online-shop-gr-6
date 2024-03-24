@@ -2,6 +2,8 @@
 
 namespace Request;
 
+use Core\src\Request\Request;
+
 class LoginRequest extends Request
 {
     public function getName(): string

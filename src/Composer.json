@@ -1,0 +1,19 @@
+{
+  "name": "project/online-shop-test",
+  "type": "project",
+  "autoload": {
+    "psr-4": {
+      "Project\\online-shop-gr-6-main0\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Bakuk",
+      "email": "bakuk1996@mail.ru"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "project/core": "dev-main"
+  }
+}

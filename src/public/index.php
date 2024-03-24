@@ -13,7 +13,7 @@ require_once './../Core/App.php';
 
 Autoloader::registrate();
 
-$container = new \Core\Container\Container();
+$container = new \Core\src\Container\Container();
 
 $container->set(UserController::class, function () {
     $authentication = new Service\Autentication\SessionAuthenticationService();

@@ -123,3 +123,8 @@ File: /var/www/html/src/Controller/ProductController.php
 Line: 38
 Message: Call to a member function getId() on null
 
+Date: 2024-03-22 06:45:30
+File: /var/www/html/src/Controller/ProductController.php
+Line: 38
+Message: Call to a member function getId() on null
+

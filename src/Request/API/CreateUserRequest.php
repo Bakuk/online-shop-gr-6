@@ -2,7 +2,7 @@
 
 namespace Request\API;
 
-use Request\Request;
+use Core\src\Request\Request;
 
 class CreateUserRequest extends Request
 {

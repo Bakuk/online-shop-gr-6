@@ -2,6 +2,8 @@
 
 namespace Request;
 
+use Core\src\Request\Request;
+
 class RegistrateRequest extends Request
 {
 

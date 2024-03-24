@@ -2,11 +2,11 @@
 
 namespace Controller;
 
+use Core\AuthenticationServiceInterface;
 use Core\ViewRenderer;
 use Model\Product;
 use Model\UserProduct;
 use Request\OrderRequest;
-use Service\Autentication\AuthenticationServiceInterface;
 use Service\OrderService;
 
 class OrderController

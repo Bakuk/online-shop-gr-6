@@ -2,6 +2,7 @@
 
 namespace Service\Autentication;
 
+use Core\AuthenticationServiceInterface;
 use Model\User;
 
 class SessionAuthenticationService implements AuthenticationServiceInterface

@@ -3,11 +3,9 @@
 
 namespace Core;
 
-use Core\Container\Container;
-use Model;
+use Core\src\Container\Container;
+use Core\src\Logger\LoggerService;
 use PDO;
-use Request;
-use Service\LoggerService;
 use Throwable;
 
 class App
@@ -23,7 +21,7 @@ class App
     public function bootstrap()
     {
         $pdo = $this->container->get(PDO::class);
-        Model\Model::init($pdo);
+        src\Model\Model::init($pdo);
     }
 
     public function run()
@@ -45,7 +43,7 @@ class App
 
 
                 if (empty($requestRoute)) {
-                    $request = new Request\Request($requestMethod, $requestUri, headers_list(), $_REQUEST);
+                    $request = new src\Request\Request($requestMethod, $requestUri, headers_list(), $_REQUEST);
                 } else {
                     $request = new $requestRoute($requestMethod, $requestUri, headers_list(), $_REQUEST);
 
