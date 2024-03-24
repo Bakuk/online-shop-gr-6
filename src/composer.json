@@ -3,7 +3,7 @@
   "type": "project",
   "autoload": {
     "psr-4": {
-      "Project\\online-shop-gr-6-main0\\": "src/"
+      "Project\\online-shop-gr-6-main\\": "src/"
     }
   },
   "authors": [
