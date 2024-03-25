@@ -1,0 +1,17 @@
+{
+    "name": "root/html",
+    "description": "composer",
+    "license": "1.0",
+    "autoload": {
+        "psr-4": {
+            "Root\\Html\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "bakuk",
+            "email": "bakuk1996@mail.ru"
+        }
+    ],
+    "require": {}
+}
