@@ -1,7 +1,7 @@
 {
     "name": "bakuk/project",
     "description": "composer",
-    "license": "1.0",
+    "type" : "project",
     "autoload": {
         "psr-4": {
             "bakuk\\project\\": "src/"
